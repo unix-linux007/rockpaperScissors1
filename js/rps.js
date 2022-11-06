@@ -1,151 +1,137 @@
-function playRound()
+function game()
+{
+  let i=0, j=0, k=1;
+//create functions for each buttons by eventlistener
+const rock = document.getElementById("rockBtn");
+const paper = document.getElementById("paperBtn");
+const scissors = document.getElementById("scissorsBtn");
+
+if(rock){rock.addEventListener('click', functRock);}
+paper.addEventListener('click', functPaper);
+scissors.addEventListener('click', functScissors);
+
+function functRock(){
+  playRound("rock");
+}
+
+function functPaper(){
+  playRound("paper");
+}
+
+function functScissors(){
+  playRound("scissors");
+}
+
+// playRound function
+
+function playRound(playerSelection)
 {   
-    function getComputerChoice(n)
+ 
+    // console.log("you seletected " + playerSelection);
+
+    // create DOM way to add display round no.
+    const container1 = document.querySelector('#display');
+    const content1 = document.createElement('h4');
+    content1.classList.add('displayPlayerSelection');
+    content1.textContent = 'Game Round' + ": " + k;
+    container1.appendChild(content1);
+
+    k++;
+
+    // create DOM way to add display player selection
+    //const container2 = document.querySelector('#display');
+   // const content2 = document.createElement('div');
+    // content2.classList.add('displayPlayerSelection');
+    //content2.textContent = 'you selected' + ": " + playerSelection;
+    //container1.appendChild(content2);
+    
+    //get computer selection automatic
+
+    function getComputerChoice (n)
     {
         const randomNum = Math.floor(Math.random()*n);
     
         if (randomNum === 0)
-            return "Rock";
+            return "rock";
         else if (randomNum === 1)
-            return "Paper";
+            return "paper";
         else
-            return "Scissors";
+            return "scissors";
     }
 
     const computerSelection = getComputerChoice(3);
+   // console.log("computer seletected " + computerSelection);
 
-    function playerSelect(){
-        let btns = document.querySelectorAll('button');
+     // create DOM way to add display computer selection
+    //const container2 = document.querySelector('#display');
+   // const content3 = document.createElement('div');
+    //content3.classList.add('displayComputerSelection');
+    //content3.textContent = 'computer selected' + ": " + computerSelection;
+    //container1.appendChild(content3);
 
-        btns.forEach(function (i) {
-            i.addEventListener('click', function() {
-             // return i;
-              console.log(i);
-                });
-            });
-       
-    }
 
-      
-      let playerSelection = ""; 
-   //  playerSelection = playerSelect();
-     
-    let valid = false;
-    while (!valid)
+    function roundResult (playerSelection, computerSelection) 
     {
-        if (playerSelection === computerSelection)
-            {
-                const container = document.querySelector('#board');
-                const content5 = document.createElement('p');
-                content5.classList.add('content6');
-                content5.textContent = "this is a tie, select your choice again among rock papaer scissors";
-                container.appendChild(content5);
-
-                playerSelection = playerSelect();
-
-            }
-    
-        else if ((playerSelection !== "Rock") && (playerSelection !== "Paper") && (playerSelection !== "Scissors"))
-           {
-            const container = document.querySelector('#board');
-            const content6 = document.createElement('p');
-                content6.classList.add('content6');
-                content6.textContent = "select your correct choise among rock papaer scissors";
-                container.appendChild(content6);
-
-                playerSelection = playerSelect();
-           }
-        
-        else
-            valid = true;
-    }
-
-    
-
-        //console.log("you seletected " + playerSelection);
-       const container = document.querySelector('#board');
-
-        const content2 = document.createElement('p');
-        content2.classList.add('content2');
-        content2.textContent = "you seletected " + playerSelection;
-        container.appendChild(content2);
-        
-
-    function roundResult(playerSelection, computerSelection) 
-    {
-        if (playerSelection === "Rock" && computerSelection === "Paper")
+        if (playerSelection === "rock" && computerSelection === "paper")
             return "You loose, paper beats rock";
-        else if (playerSelection === "Paper" && computerSelection === "Rock")
+        else if (playerSelection === "paper" && computerSelection === "rock")
             return "You won, paper beats rock";
-        else if (playerSelection === "Scissors" && computerSelection === "Paper")
+        else if (playerSelection === "scissors" && computerSelection === "paper")
             return "You won, scissors beat paper";
-        else if (playerSelection === "Paper" && computerSelection === "Scissors")
+        else if (playerSelection === "paper" && computerSelection === "scissors")
             return "You loose, scissors beat paper";
-        else if (playerSelection === "Scissors" && computerSelection === "Rock")
+        else if (playerSelection === "scissors" && computerSelection === "rock")
             return "You loose, rock beats scissors";
-        else if (playerSelection === "Rock" && computerSelection === "Scissors")
+        else if (playerSelection === "rock" && computerSelection === "scissors")
             return "You won, rock beats scissors";
-        else 
-            return "something is wrong, please check players input";
+        else return "this is a tie, click again to select among rock papaer scissors";
 
     }
 
   let res = roundResult(playerSelection, computerSelection);
 
-    //console.log("round Result " + res);
-   // const container = document.querySelector('#board');
+  //  console.log("round Result " + res);
 
-    const content1 = document.createElement('p');
-    content1.classList.add('content1');
-    content1.textContent = "round Result " + res;
-    container.appendChild(content1);
+    // create DOM way to add display round result
+    //const container2 = document.querySelector('#display');
+    const content4 = document.createElement('h5');
+    content4.classList.add('displayRoundResult');
+    content4.textContent = 'Result' + ": " + res;
+    container1.appendChild(content4);
 
-    return res;
+if (res.includes("won"))
+  i=i+1;
+
+else if (res.includes("loose"))
+   j=j+1;
+
+   const content8 = document.createElement('div');
+   content8.classList.add('displayGameResult');
+   content8.textContent = 'Player score: ' + i + " & " + " Computer score : " + j;
+   container1.appendChild(content8);
+
+if (i >= 5){
+   // console.log("player won");
+    //const container2 = document.querySelector('#display');
+    const content6 = document.createElement('h3');
+    content6.classList.add('displayGameResult');
+    content6.textContent = 'Player won';
+    container1.appendChild(content6);
+
+  }
+else if (j >= 5) {
+  const content7 = document.createElement('h3');
+    content7.classList.add('displayGameResult');
+    content7.textContent = 'Computer won';
+    container1.appendChild(content7);
+
 }
 
-function game()
-{
 
-    const container = document.querySelector('#display');
-
-    const content = document.createElement('p');
-    content.classList.add('content');
-    content.textContent = 'Please enter your choise among rock papaer & scissors';
-
-    container.appendChild(content);
-
-    for (let i=0, j=0; i<5; i++)
-    {
-        let result = "";
-
-            result = playRound();
-
-        if (result.includes("won"))
-            j++;
-
-        if (i === 4)
-        {
-            if (j >= 3){
-             //   console.log("player won with " + j + " score");
-                const container = document.querySelector('#board');
-
-                const content = document.createElement('p');
-                content.classList.add('content');
-                content.textContent = "player won with " + j + " score";
-                container.appendChild(content);
-            }
-            else{
-               // console.log("player loose with " + j + " score");
-                const container = document.querySelector('#board');
-
-                const content = document.createElement('p');
-                content.classList.add('content');
-                content.textContent = "player loose with " + j + " score";
-                container.appendChild(content);
-
-            }
-        }
-    }
 }
+
+}
+
+//game main
 
 game();
